@@ -15,9 +15,8 @@ struct Mo {
     void push(int _l, int _r) {
         l.push_back(_l); r.push_back(_r);
     }
-
-    template<typename F, typename G, typename H>
-    auto run(const F& add, const G& del, const H& calc) -> std::vector<decltype(calc())> {
+    template<typename AL, typename AR, typename DL, typename DR, typename C>
+    auto run(const AL& add_left, const AR& add_right, const DL& del_left, const DR& del_right, const C& calc) -> std::vector<decltype(calc())> {
         q = l.size();
         assert(0 < q);
 
@@ -34,14 +33,19 @@ struct Mo {
 
         int nl = 0, nr = 0;
         for(int i : que) {
-            while (l[i] < nl) add(--nl);
-            while (nr < r[i]) add(nr++);
-            while (nl < l[i]) del(nl++);
-            while (r[i] < nr) del(--nr);
+            while (l[i] < nl) add_left(--nl);
+            while (nr < r[i]) add_right(nr++);
+            while (nl < l[i]) del_left(nl++);
+            while (r[i] < nr) del_right(--nr);
 
             res[i] = calc();
         }
 
         return res;
+    }
+
+    template<typename A, typename D, typename C>
+    auto run(const A& add, const D& del, const C& calc) -> std::vector<decltype(calc())> {
+        return run(add, add, del, del, calc);
     }
 };
