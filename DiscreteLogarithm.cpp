@@ -3,6 +3,7 @@
 /// @return a^n mod MOD
 constexpr long long modpow(long long a, long long n, long long MOD) {
     long long res = 1;
+    a %= MOD;
     while(n > 0) {
         if(n & 1) res = res * a % MOD;
         a = a * a % MOD;
