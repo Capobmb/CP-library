@@ -1,22 +1,21 @@
-#include<bits/stdc++.h>
-
-// --------------
-
-
-/*
-const long long RANDOM = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-struct chash {
-    long long operator()(long long x) const { return x ^ RANDOM; }
-};
-*/
+#include <bits/stdc++.h>
+// ---------------------
 
 #include <ext/pb_ds/assoc_container.hpp>
-template<class T, class U>using hash_table =  __gnu_pbds::gp_hash_table<T, U>;
+using namespace __gnu_pbds;
+template <class T, class U>
+using hash_table = gp_hash_table<T, U, std::hash<T>>;
+template <class T, class U>
+bool count(hash_table<T, U>& mp, T&& key) {
+    return mp.find(key) != mp.end();
+}
 
-// CodeForces に出す場合かつ整数型がkeyの場合、下もコピペ
-struct chash {
+struct llhash {
     long long seed;
-    chash() : seed(std::chrono::high_resolution_clock::now().time_since_epoch().count()) {}
+    llhash()
+        : seed(std::chrono::high_resolution_clock::now()
+                   .time_since_epoch()
+                   .count()) {}
     long long operator()(long long x) const { return x ^ seed; }
 };
-using robust_hash_table = __gnu_pbds::gp_hash_table<long long, long long, chash>;
+// using robust_hash_table = gp_hash_table<long long, long long, llhash>;

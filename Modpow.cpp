@@ -1,13 +1,15 @@
-long long modpow(long long a, long long n, long long mod) {
+/// @return a^n mod MOD
+constexpr long long modpow(long long a, long long n, long long MOD) {
     long long res = 1;
     while(n > 0) {
-        if(n & 1) res = res * a % mod;
-        a = a * a % mod;
+        if(n & 1) res = res * a % MOD;
+        a = a * a % MOD;
         n >>= 1;
     }
     return res;
 }
 
+/// @return a^n
 long long powll(long long a, long long n) {
     long long res = 1;
     while(n > 0) {

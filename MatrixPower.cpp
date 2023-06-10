@@ -7,13 +7,23 @@ struct Matrix {
     int row, col;
     V<V<T>> dat;
 
+    /**
+     * @brief Construct a new Matrix row * col.
+     */
     Matrix(int row, int col) : Matrix(V<V<T>>(row, V<T>(col, T()))) {}
+    /**
+     * @brief Construct a new Matrix from 2D vector
+     */
     Matrix(const V<V<T>>& vec) : row(vec.size()), dat(vec) {
         assert(!vec.empty());
         col = vec.front().size();
     }
+
     V<T>& operator[](int i) {return dat[i];}
 
+    /**
+     * @return THIS * b
+     */
     Matrix<T> prod(Matrix<T> b) {
         // global な operator* にしようか
         // vector のほうも
@@ -29,6 +39,9 @@ struct Matrix {
         }
         return ret;
     }
+    /**
+     * @return THIS * b
+     */
     V<T> prod(V<T> v) {
         int dim = v.size();
         assert(col == dim);
@@ -42,6 +55,9 @@ struct Matrix {
         return ret;
     }
 
+    /**
+     * @return THIS ^ k
+     */
     Matrix<T> pow(long long k) const {
         assert(row == col && 0 <= k);
         const int n = row;

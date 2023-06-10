@@ -1,8 +1,6 @@
 #include<bits/stdc++.h>
 
 /**
-* @fn
-* range_min
 * @brief Slide minimum algorithm
 * @param a vector with typename T
 * @param len length of ranges that acquires minimum value
@@ -31,8 +29,6 @@ std::vector<int> range_min(const std::vector<T>& a, int len) {
 
 
 /**
-* @fn
-* range_max
 * @brief Slide maximum algorithm
 * @param a vector with typename T
 * @param len length of ranges that acquires maximum value

@@ -15,15 +15,15 @@ class BIT {
         for (; p <= size; p += p & -p) bit[p] += x;
     }
 
-    // a[l] + ... + a[r-1]
+    // sum[l, r) = a[l] + ... + a[r-1]
     T sum(int l, int r) const {
         assert(0 <= l && l <= r && r <= size);
         return internal_sum(r) - internal_sum(l);
     }
 
-    // sum(0, r) = a[0] + ... a[r-1] >= x となる最小のrを与える
-    // sum(0, n) < x の場合は r = n+1 を返す。
-    // 各項が非負であることを要求する。
+    // sum[0, r) = a[0] + ... a[r-1] >= x となる最小のrを与える
+    // sum[0, n) < x の場合は r = n+1 を返す。
+    // 要件: 各項は非負
     int lower_bound(T x) const {
         int ind = 0, p = 1;  // p : size以上最小の2べき
         while (p < size) p <<= 1;
@@ -40,7 +40,7 @@ class BIT {
    private:
     std::vector<T> bit;
     int size;
-    // a[0] + ... + a[r-1]
+    // sum[0, r) = a[0] + ... + a[r-1]
     T internal_sum(int r) const {
         T res{};
         for (; r > 0; r -= r & -r) res += bit[r];

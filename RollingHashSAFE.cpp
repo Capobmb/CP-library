@@ -12,7 +12,9 @@ struct rolling_hash {
     static inline const ull base = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();;
     std::vector<ull> hash, power;
 
-    // a*b mod 2^61-1 (最後にModを取らない) / note: result < 4*MOD
+    /**
+     * @return r = a*b mod 2^61-1 such that 0 <= r < 4*MOD
+     */
     static ull mul(ull a, ull b) noexcept {
         static constexpr ull MASK30 = (1UL << 30) - 1;
         static constexpr ull MASK31 = (1UL << 31) - 1;
@@ -26,7 +28,9 @@ struct rolling_hash {
         return au * bu * 2 + midu + (midd << 31) + ad * bd;
     }
 
-    // X mod 2^61-1
+    /**
+     * @return X mod 2^61-1
+     */
     static ull take_mod(ull x) noexcept {
         static constexpr ull MASK61 = MOD;
         ull xu = x >> 61;
@@ -45,18 +49,24 @@ struct rolling_hash {
         }
     }
 
-    // get hash of S[l:r) in O(1)
+    /**
+     * @return Hash for S[l:r)
+     */
     ull get_hash(int l, int r) const noexcept {
         static constexpr ull POSITIVIZER = MOD << 2;
         return take_mod(hash[r] + POSITIVIZER - mul(hash[l], power[r-l]));
     }
 
-    // return S[l1:r1) == S[l2:r2) in O(1)
+    /**
+     * @return S[l1:r1) == S[l2:r2)
+     */
     bool is_same(int l1, int r1, int l2, int r2) const noexcept {
         return get_hash(l1, r1) == get_hash(l2, r2);
     }
 
-    // get length of LCP of S[l1:r1) and S[l2:r2) in O(logN)
+    /**
+     * @return LCP length of S[l1:r1) and S[l2:r2). O(logN)
+     */
     int get_lcp(int l1, int r1, int l2, int r2) const noexcept {
         int len = std::min(r1 - l1, r2 - l2);
         int ok = 0, ng = len + 1, mid{};
@@ -66,7 +76,9 @@ struct rolling_hash {
         }
         return ok;
     }
-    // get length of LCP of S[l1:r1) and ot[l2:r2) in O(logN)
+    /**
+     * @return LCP length of S[l1:r1) and ot[l2:r2). O(logN)
+     */
     int get_lcp(int l1, int r1, rolling_hash& ot, int l2, int r2) const noexcept {
         int ok = 0, ng = std::min(r1 - l1, r2 - l2) + 1, mid{};
         while(ng - ok > 1) {
@@ -76,7 +88,9 @@ struct rolling_hash {
         return ok;
     }
 
-    // concatenate hash of S[l1:r1) and S[l2:r2) in this order
+    /**
+     * @return Hash of (S[l1:r1) + S[l2:r2))
+     */
     ull concat(int l1, int r1, int l2, int r2) const noexcept {
         auto lh = get_hash(l1, r1);
         auto rh = get_hash(l2, r2);
@@ -84,12 +98,14 @@ struct rolling_hash {
         if(res >= MOD) res -= MOD;
         return res;
     }
-    // concatenate hash of S[l1:r1) and ot[l2:r2) in this order
+    /**
+     * @return Hash of (S[l1:r1) + ot[l2:r2))
+     */
     ull concat(int l1, int r1, rolling_hash& ot, int l2, int r2) const noexcept {
         auto h1 = get_hash(l1, r1);
         auto h2 = ot.get_hash(l2, r2);
-        auto res = RH::take_mod(RH::mul(h1, ot.power[r2 - l2])) + h2;
-        if(res >= RH::MOD) res -= RH::MOD;
+        auto res = take_mod(mul(h1, ot.power[r2 - l2])) + h2;
+        if(res >= MOD) res -= MOD;
         return res;
     }
 };
@@ -104,22 +120,3 @@ bool is_less(string& s, string& t, RH& sh, int l1, int r1, RH& th, int l2, int r
 bool is_greater(string& s, string& t, RH& sh, int l1, int r1, RH& th, int l2, int r2) {
     return !is_less(s, t, sh, l1, r1, th, l2, r2);
 }
-
-// -------------------------------------------------------------------------
-/*
-// unsigned long long concat(RH& a, int l1, int r1, RH& b, int l2, int r2) {
-//     auto ah = a.get_hash(l1, r1);
-//     auto bh = b.get_hash(l2, r2);
-//     auto res = RH::take_mod(RH::mul(ah, b.power[r2 - l2])) + bh;
-//     if(res >= RH::MOD) res -= RH::MOD;
-//     return res;
-// }
-// int get_lcp(RH& a, int l1, int r1, RH& b, int l2, int r2) {
-//     int ok = 0, ng = std::min(r1 - l1, r2 - l2) + 1, mid{};
-//     while(ng - ok > 1) {
-//         mid = (ok + ng) >> 1;
-//         (a.get_hash(l1, l1 + mid) == b.get_hash(l2, l2 + mid) ? ok : ng) = mid;
-//     }
-//     return ok;
-// }
-*/

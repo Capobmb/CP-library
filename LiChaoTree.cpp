@@ -1,10 +1,9 @@
 #include<bits/stdc++.h>
-
-
 // Verification : 
 // Line Add Get Min - Library Checker (// https://judge.yosupo.jp/submission/132907)
 // Segment Add Get Min - Library Checker (https://judge.yosupo.jp/submission/132915)
 // note : ↑の制約 : |a|,|x| <= 10^9, |b| <= 10^18
+// ---------------------------------------------------------------------------------
 
 template<typename T, bool(*comp)(T, T), T(*e)(), T(*xub)()>
 struct LiChaoTree {
@@ -18,7 +17,12 @@ struct LiChaoTree {
     std::vector<Line> dat;    // セグ木のノード 1-indexed. dat[n+i] = x[i].
 
     LiChaoTree () {}
-    // max(x) < xub() , comp(max(a) * xub() + max(b), e()) = false.
+    /**
+     * @brief Construct a new Li Chao Tree object. \n x_max < xub() , comp(a_max * xub() + b_max, e()) = false.
+     * 
+     * @tparam S S must be convertible to T
+     * @param _x {線分の追加されるx座標} ∪ {クエリで与えられるx座標}
+     */
     template<typename S>
     LiChaoTree (const std::vector<S>& _x) {
         n = 1;
@@ -111,6 +115,7 @@ struct LiChaoTree {
     }
 };
 
+// EXAMPLE: RANGE MIN
 // using T = long long;
 // bool comp(T a, T b) {return a < b;}
 // constexpr T e() {return 1LL<<62;}

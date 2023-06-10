@@ -2,7 +2,7 @@
 
 
 
-// (0, 0) を含んではならない (含んでも良いが (0,-1) と同じ偏角になる)
+// (0, 0) は (0, -1) と同じ偏角となる
 // 偏角 -pi/2 ~ 3pi/2 でsort
 template<typename T>
 std::vector<std::pair<T, T>> argsort(std::vector<std::pair<T, T>>& v) {

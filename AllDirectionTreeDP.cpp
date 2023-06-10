@@ -2,6 +2,15 @@
 
 
 template<class C> struct Cost_tag{};
+/**
+ * @brief 全方位木DPオブジェクト
+ * 
+ * @tparam S type of DP. Must be Monoid.
+ * @tparam F type of merge function
+ * @tparam G type of raise function
+ * @tparam H type of derive function
+ * @tparam C type of Cost on the Edge
+ */
 template<class S, class F, class G, class H, class C>
 struct all_direction_tree_dp {
     int n; // 頂点数
@@ -21,6 +30,16 @@ struct all_direction_tree_dp {
         Edge(int to, C cost) : to(to), cost(cost) {}
     };
     std::vector<std::vector<Edge>> edges;
+
+    /**
+     * @brief Construct a new all direction tree dp object
+     * 
+     * @param n 頂点数
+     * @param e DP の単位元. (S, e, merge) must form Monoid.
+     * @param merge (S, S) -> S. 辺i-jを根とする部分木の結果同士をマージする演算
+     * @param raise (S, ℤ, ℤ, C) -> S. 子jを根とする部分木の結果から 辺i-j(コストc)を根とする部分木の結果を得る演算
+     * @param derive (S, ℤ) -> S : 辺i-jを根とする部分木の結果の総mergeから親iを根とする部分木の結果を得る演算
+     */
     all_direction_tree_dp(int n, S e, F merge, G raise, H derive, Cost_tag<C>) : n(n), e(e), merge(merge), raise(raise), derive(derive), ans(n), dp(n), edges(n) {
         static_assert(std::is_same_v<S, decltype(merge(e, e))>, "ERROR: invalid merge function");
         static_assert(std::is_same_v<S, decltype(raise(e, 0, 0, C{}))>, "ERROR: invalid raise function");

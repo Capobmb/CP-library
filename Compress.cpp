@@ -1,11 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/* compress
-    X を座標圧縮して書き換える（副作用）
-    返り値: ソート済みの値を格納した配列vals ; vals[i] = 座圧したi番目の値
-    計算量: O(nlogn)
-*/
+/**
+ * @brief 配列を破壊的に座標圧縮する
+ * @return vector<T> vals: 値を昇順に格納した配列. vals[i] = 座圧したi番目の値
+ */
 template <typename T>
 vector<T> compress(vector<T> &X) {
     vector<T> vals = X;
