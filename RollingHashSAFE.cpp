@@ -79,7 +79,7 @@ struct rolling_hash {
     /**
      * @return LCP length of S[l1:r1) and ot[l2:r2). O(logN)
      */
-    int get_lcp(int l1, int r1, rolling_hash& ot, int l2, int r2) const noexcept {
+    int get_lcp(int l1, int r1, const rolling_hash& ot, int l2, int r2) const noexcept {
         int ok = 0, ng = std::min(r1 - l1, r2 - l2) + 1, mid{};
         while(ng - ok > 1) {
             mid = (ok + ng) >> 1;
@@ -111,12 +111,12 @@ struct rolling_hash {
 };
 using RH = rolling_hash;
 // s[l1, r1) < t[l2, r2)
-bool is_less(string& s, string& t, RH& sh, int l1, int r1, RH& th, int l2, int r2) {
+bool is_less(const string& s, const RH& sh, int l1, int r1, const string& t, const RH& th, int l2, int r2) {
     int lcp_len = sh.get_lcp(l1, r1, th, l2, r2);
     if(lcp_len == r1 - l1 || lcp_len == r2 - l2) return r1 - l1 < r2 - l2;
     return s[l1 + lcp_len] < t[l2 + lcp_len];
 }
 // s[l1, r1) > t[l2, r2)
-bool is_greater(string& s, string& t, RH& sh, int l1, int r1, RH& th, int l2, int r2) {
-    return !is_less(s, t, sh, l1, r1, th, l2, r2);
+bool is_greater(const string& s, const RH& sh, int l1, int r1, const string& t, const RH& th, int l2, int r2) {
+    return !is_less(s, sh, l1, r1, t, th, l2, r2);
 }
