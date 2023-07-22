@@ -1,5 +1,5 @@
-#include<vector>
-#include<algorithm>
+#include <algorithm>
+#include <vector>
 
 template <typename T>
 std::vector<std::vector<T>> transposed(const std::vector<std::vector<T>>& v) {
@@ -44,7 +44,7 @@ std::vector<std::vector<T>> counterclockwise_rotated(
 }
 
 template <typename T>
-std::vector<std::vector<T>> trimmed(std::vector<std::vector<T>>& v,
+std::vector<std::vector<T>> trimmed(const std::vector<std::vector<T>>& v,
                                     T&& t = T{}) {
     auto w = v;
     for (int rot_num = 0; rot_num < 4; rot_num++) {
