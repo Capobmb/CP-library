@@ -9,10 +9,14 @@ struct ext_multiset {
     void clear() { st.clear(); }
     int count(const T& x) { return st.count(x); }
     bool contains(const T& x) { return st.find(x) != st.end(); }
-    iterator geq(const T& x) { return st.lower_bound(x); }
-    iterator gt(const T& x) { return st.upper_bound(x); }
-    iterator leq(const T& x) { return std::prev(st.upper_bound(x)); } // need assertion
-    iterator lt(const T& x) { return std::prev(st.lower_bound(x)); } // need assertion
+    bool has_greater_equal(const T& x) { return st.lower_bound(x) != st.end(); }
+    iterator greater_equal(const T& x) { return st.lower_bound(x); }
+    bool has_greater(const T& x) { return st.upper_bound(x) != st.end(); }
+    iterator greater(const T& x) { return st.upper_bound(x); }
+    bool has_less_equal(const T& x) { return st.upper_bound(x) != st.begin(); }
+    iterator less_equal(const T& x) { return std::prev(st.upper_bound(x)); }
+    bool has_less(const T& x) { return st.lower_bound(x) != st.begin(); }
+    iterator less(const T& x) { return std::prev(st.lower_bound(x)); }
     void insert(const T& x) { st.insert(x); }
     int size() const noexcept { return (int)st.size(); }
     template <typename... Args>
