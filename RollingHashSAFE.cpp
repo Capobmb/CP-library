@@ -7,7 +7,7 @@ struct rolling_hash {
     int n;
 
     using ull = unsigned long long;
-    static constexpr ull MOD = (1UL << 61) - 1;
+    static constexpr ull MOD = (1ULL << 61) - 1;
     // static constexpr int base = 9973;
     static inline const ull base = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();;
     std::vector<ull> hash, power;
@@ -16,8 +16,8 @@ struct rolling_hash {
      * @return r = a*b mod 2^61-1 such that 0 <= r < 4*MOD
      */
     static ull mul(ull a, ull b) noexcept {
-        static constexpr ull MASK30 = (1UL << 30) - 1;
-        static constexpr ull MASK31 = (1UL << 31) - 1;
+        static constexpr ull MASK30 = (1ULL << 30) - 1;
+        static constexpr ull MASK31 = (1ULL << 31) - 1;
         ull au = a >> 31;
         ull ad = a & MASK31;
         ull bu = b >> 31;
