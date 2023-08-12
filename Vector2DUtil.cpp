@@ -3,7 +3,7 @@
 
 template <typename T>
 std::vector<std::vector<T>> transposed(const std::vector<std::vector<T>>& v) {
-    size_t n = v.size(), m = v.front().size();
+    int n = v.size(), m = v.front().size();
     std::vector<std::vector<T>> ret(m, std::vector<T>(n));
     for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
@@ -16,7 +16,7 @@ std::vector<std::vector<T>> transposed(const std::vector<std::vector<T>>& v) {
 template <typename T>
 std::vector<std::vector<T>> clockwise_rotated(
     const std::vector<std::vector<T>>& v) {
-    size_t n = v.size(), m = v.front().size();
+    int n = v.size(), m = v.front().size();
     std::vector<std::vector<T>> ret(m, std::vector<T>(n));
 
     for (int i = 0; i < m; i++) {
@@ -31,7 +31,7 @@ std::vector<std::vector<T>> clockwise_rotated(
 template <typename T>
 std::vector<std::vector<T>> counterclockwise_rotated(
     const std::vector<std::vector<T>>& v) {
-    size_t n = v.size(), m = v.front().size();
+    int n = v.size(), m = v.front().size();
     std::vector<std::vector<T>> ret(m, std::vector<T>(n));
 
     for (int i = 0; i < m; i++) {
