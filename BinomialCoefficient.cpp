@@ -30,6 +30,7 @@ struct Bicoef {
         return fac[n] * finv[n-k] % MOD;
     }
     inline long long fact(int n) const { return fac[n]; }
+    inline long long factinv(int n) const { return finv[n]; }
 };
 // Bicoef<998244353> bf(n);
 
@@ -62,6 +63,7 @@ struct Bicoef {
         return fac[n] * finv[n-k] % MOD;
     }
     inline constexpr long long fact(int n) const { return fac[n]; }
+    inline long long factinv(int n) const { return finv[n]; }
     
     long long fac[MAX];
     long long finv[MAX];
