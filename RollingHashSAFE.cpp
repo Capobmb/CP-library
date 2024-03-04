@@ -40,6 +40,8 @@ struct rolling_hash {
         return res;
     }
 
+    rolling_hash() : rolling_hash("") {}
+
     rolling_hash(const std::string &s) : n(s.size()), hash(n+1), power(n+1) {
         hash[0] = 0;
         power[0] = 1;
