@@ -1,12 +1,13 @@
 // Fetched from https://ei1333.github.io/luzhiled/snippets/structure/convex-hull-trick-add-monotone.html at 2024/03/10
+// Add namespace identifier by Capo, at 2024/03/10
 
 #include<bits/stdc++.h>
 template< typename T, bool isMin >
 struct ConvexHullTrickAddMonotone {
 #define F first
 #define S second
-  using P = pair< T, T >;
-  deque< P > H;
+  using P = std::pair< T, T >;
+  std::deque< P > H;
 
   ConvexHullTrickAddMonotone() = default;
 
@@ -24,8 +25,8 @@ struct ConvexHullTrickAddMonotone {
 
     //return (b.F-a.F)*(c.S-b.S) >= (b.S-a.S)*(c.F-b.F);
     return
-        D(b.F - a.F) * sgn(c.S - b.S) / D(abs(b.S - a.S)) >=
-        D(c.F - b.F) * sgn(b.S - a.S) / D(abs(c.S - b.S));
+        D(b.F - a.F) * sgn(c.S - b.S) / D(std::abs(b.S - a.S)) >=
+        D(c.F - b.F) * sgn(b.S - a.S) / D(std::abs(c.S - b.S));
   }
 
   void add(T a, T b) {
