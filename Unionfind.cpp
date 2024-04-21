@@ -63,7 +63,7 @@ struct UnionFind {
         int n = parent.size();
         std::vector<int> root_buf(n);
         for(int i = 0; i < n; i++) root_buf[i] = root(i);
-        std::vector<std::vector<int>> result;
+        std::vector<std::vector<int>> result(n);
         for(int i = 0; i < n; i++) result[root_buf[i]].push_back(i);
 
         result.erase(
