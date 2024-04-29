@@ -1,5 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
+// Ref: https://qiita.com/hotman78/items/9c643feae1de087e6fc5
 // ^-^-------------------
 
 class persistent_union_find {
