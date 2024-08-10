@@ -74,9 +74,17 @@ struct Timer {
 	double get() { return (double)(getCycle() - start) / CYCLES_PER_SEC; }
     bool time_check() { return get() < TIME_LIMIT; }
 	inline int64_t getCycle() {
-		uint32_t low, high;
-		__asm__ volatile ("rdtsc" : "=a" (low), "=d" (high));
-		return ((int64_t)low) | ((int64_t)high << 32);
+#ifdef LOCAL
+        return std::chrono::high_resolution_clock::now()
+            .time_since_epoch()
+            .count();
+#elif defined(__x86_64__)
+        uint32_t low, high;
+        __asm__ volatile("rdtsc" : "=a"(low), "=d"(high));
+        return ((int64_t)low) | ((int64_t)high << 32);
+#else
+#error "Cycle counter not available or not configured"
+#endif
 	}
 } TIMER;
 
