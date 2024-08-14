@@ -74,6 +74,8 @@ template<class T, class U> inline bool chmin(T &a, U b) { if(a>b) {a=b; return 1
 template<class T, class U> inline bool chmax(T &a, U b) { if(a<b) {a=b; return 1;} return 0;}
 ll max (ll lhs, ll rhs) {return std::max<ll>(lhs, rhs);}
 ll min (ll lhs, ll rhs) {return std::min<ll>(lhs, rhs);}
+ll ceil_div(ll a, ll b) { return a / b + ((a ^ b) >= 0 && a % b); }
+ll floor_div(ll a, ll b) { return a / b - ((a ^ b) < 0 && a % b); }
 template<class Container> Container reversed(const Container& v) {return Container(v.rbegin(), v.rend());}
 template<class Container> Container sorted(const Container& v, bool rev=false) {Container r = v; rev ? sort(r.rbegin(), r.rend()) : sort(r.begin(), r.end()); return r;}
 template<class T>void uniqify(V<T>& v){v.erase(unique(ALL(v)),v.end());}
