@@ -33,11 +33,14 @@
 #error "We don't know this compiler lol"
 #endif
 #if __has_include(<atcoder/all>)
-    #include <atcoder/all>   // ac-library  #### CAREFUL on CodeForces
-    using namespace atcoder; // ac-library
+    #include <atcoder/all>
+    using namespace atcoder;
     std::ostream &operator<<(std::ostream &os, const modint998244353 &a) {return os<<a.val();}
     std::ostream &operator<<(std::ostream &os, const modint1000000007 &a) {return os<<a.val();}
+    std::istream &operator>>(std::istream &is, modint998244353 &a) {long long t; is>>t; a=t; return is;}
+    std::istream &operator>>(std::istream &is, modint1000000007 &a) {long long t; is>>t; a=t; return is;}
 #endif
+using namespace std;
 // # Type Aliases
 using ll = long long;
 using ull = unsigned long long;
