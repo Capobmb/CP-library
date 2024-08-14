@@ -1,9 +1,37 @@
+#if !defined(__clang__) && defined(__GNUC__)
+#include <bits/stdc++.h>
 #pragma GCC optimize("O3,unroll-loops")
 #ifdef ONLINE_JUDGE
 #pragma GCC target("avx2,fma,popcnt,bmi,bmi2")
 #endif
-#include <bits/stdc++.h>
-using namespace std;
+#elif defined(__clang__)
+#include <algorithm>
+#include <bitset>
+#include <cassert>
+#include <chrono>
+#include <cmath>
+#include <complex>
+#include <deque>
+#include <fstream>
+#include <functional>
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <map>
+#include <numeric>
+#include <queue>
+#include <random>
+#include <set>
+#include <sstream>
+#include <stack>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <tuple>
+#include <vector>
+#else
+#error "We don't know this compiler lol"
+#endif
 #if __has_include(<atcoder/all>)
     #include <atcoder/all>   // ac-library  #### CAREFUL on CodeForces
     using namespace atcoder; // ac-library
