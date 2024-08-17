@@ -1,5 +1,6 @@
 #include <cassert>
 #include <chrono>
+#include <limits>
 
 struct Rand {
     Rand() {}
@@ -47,7 +48,7 @@ struct Rand {
     }
     // random double between [0, 1)
     double rand_prob() {
-        static constexpr unsigned int _INF = 1U << 31;
-        return (rand_int() & _INF) / (double)_INF;
+        static constexpr unsigned int _INF = std::numeric_limits<unsigned int>::max();
+        return static_cast<double>(rand_int()) / _INF;
     }
 } RAND;
