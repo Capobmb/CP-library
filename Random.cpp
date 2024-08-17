@@ -1,5 +1,5 @@
-#include <chrono>
 #include <cassert>
+#include <chrono>
 
 struct Rand {
     Rand() {}
@@ -22,12 +22,30 @@ struct Rand {
         z = w;
         return w = (w ^ (w >> 19)) ^ (t ^ (t >> 8));
     }
+    unsigned long long rand_ll() {
+        const unsigned int upper = rand_int();
+        const unsigned int lower = rand_int();
+        return (static_cast<unsigned long long>(upper) << 32) | lower;
+    }
     unsigned int rand_int(int r) {
         assert(r > 0);
         return rand_int() % r;
     }
+    unsigned long long rand_ll(unsigned long long r) {
+        assert(r > 0);
+        return rand_ll() % r;
+    }
     // random int between [l, r)
-    unsigned int rand_int(int l, int r) { return l + rand_int(r - l); }
+    unsigned int rand_int(int l, int r) {
+        assert(l < r);
+        return l + rand_int(r - l);
+    }
+    // random long long between [l, r)
+    unsigned long long rand_ll(unsigned long long l, unsigned long long r) {
+        assert(l < r);
+        return l + rand_ll(r - l);
+    }
+    // random double between [0, 1)
     double rand_prob() {
         static constexpr unsigned int _INF = 1U << 31;
         return (rand_int() & _INF) / (double)_INF;
