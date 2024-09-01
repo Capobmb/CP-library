@@ -97,8 +97,14 @@ constexpr int dx[]={1, 0, -1, 0};
     #include "CP-library/debug_print.hpp"
     #define debug(...) debug_impl(__LINE__, __VA_ARGS__)
     #define debug_impl(...) debug_print::multi_print(#__VA_ARGS__, __VA_ARGS__)
+    #include "cpp-dump/cpp-dump.hpp"
+    #define dump(...) cpp_dump(__VA_ARGS__)
+    namespace cp = cpp_dump;
+    CPP_DUMP_SET_OPTION_GLOBAL(max_line_width, 100);
+    CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
 #else
-    #define debug(...) (static_cast<void>(0))
+    #define debug(...)
+    #define dump(...)
 #endif
 // using mint = modint1000000007;
 // using mint = modint998244353;
