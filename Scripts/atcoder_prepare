@@ -23,8 +23,8 @@ function log_error() {
 
 function assert_dependency() {
     local cmd="$1"
-    
-    if ! command -v "${cmd}" &> /dev/null ; then
+
+    if ! command -v "${cmd}" &>/dev/null; then
         log_error "${cmd} is required for this script but not installed." >&2
         exit 1
     fi
@@ -37,15 +37,13 @@ function codeopen_tooldir() {
     [[ "${workspace_dir}" != */ ]] && workspace_dir="${workspace_dir}/"
 
     for directory in "${workspace_dir}"*/; do
-        if [[ -d "${directory}" && ! -L "${directory}" ]]; then
-            local cppfile="${directory}main.cpp"
-            if [[ ! -f "${cppfile}" ]]; then
-                log_warn "main.cpp does not exist for directory \"$(basename "${directory}")\". Skipping opening cpp file with default editor."
-                continue
-            fi
-            
-            open "${cppfile}"
+        local cppfile="${directory}main.cpp"
+        if [[ ! -f "${cppfile}" ]]; then
+            log_warn "main.cpp does not exist for directory \"$(basename "${directory}")\". Skipping opening cpp file with default editor."
+            continue
         fi
+
+        open "${cppfile}"
     done
 }
 
@@ -60,26 +58,24 @@ function browseropen_tooldir() {
     fi
 
     for directory in "${workspace_dir}"*/; do
-        if [[ -d "${directory}" && ! -L "${directory}" ]]; then
-            local metadata="${directory}metadata.json"
-            if [[ ! -f "${metadata}" ]]; then
-                log_warn "metadata.json for directory \"$(basename "${directory}")\" doesn't exist. Skipping opening problem."
-                continue
-            fi
-
-            local problem_id
-            problem_id="$(jq -r '.problem.problem_id' "${metadata}" 2> /dev/null)"
-            if [[ $? -ne 0 || "${problem_id}" == "null" ]]; then
-                log_warn "Failed to get problem ID for \"$(basename "${directory}")\". Skipping opening problem."
-                continue
-            fi
-
-            local url="https://atcoder.jp/contests/${contest_id}/tasks/${problem_id}"
-            open "${url}"
-            log_info "Opened ${url} for problem \"$(basename "${directory}")\"."
-            # sleep to avoid too many requests
-            sleep 0.2
+        local metadata="${directory}metadata.json"
+        if [[ ! -f "${metadata}" ]]; then
+            log_warn "metadata.json for directory \"$(basename "${directory}")\" doesn't exist. Skipping opening problem."
+            continue
         fi
+
+        local problem_id
+        problem_id="$(jq -r '.problem.problem_id' "${metadata}" 2>/dev/null)"
+        if [[ $? -ne 0 || "${problem_id}" == "null" ]]; then
+            log_warn "Failed to get problem ID for \"$(basename "${directory}")\". Skipping opening problem."
+            continue
+        fi
+
+        local url="https://atcoder.jp/contests/${contest_id}/tasks/${problem_id}"
+        open "${url}"
+        log_info "Opened ${url} for problem \"$(basename "${directory}")\"."
+        # sleep to avoid too many requests
+        sleep 0.2
     done
 }
 
