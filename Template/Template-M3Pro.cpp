@@ -102,6 +102,7 @@ constexpr int dx[]={1, 0, -1, 0};
     namespace cp = cpp_dump;
     CPP_DUMP_SET_OPTION_GLOBAL(max_line_width, 100);
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
+    // CPP_DUMP_DEFINE_EXPORT_OBJECT(Type, properties..., methods...);
 #else
     #define debug(...)
     #define dump(...)
