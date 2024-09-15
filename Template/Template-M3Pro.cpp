@@ -103,9 +103,11 @@ constexpr int dx[]={1, 0, -1, 0};
     CPP_DUMP_SET_OPTION_GLOBAL(max_line_width, 100);
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
     // CPP_DUMP_DEFINE_EXPORT_OBJECT(Type, properties..., methods...);
+    #define INLOCAL(statements) do { statements } while (false)
 #else
     #define debug(...)
     #define dump(...)
+    #define INLOCAL(statements)
 #endif
 // using mint = modint1000000007;
 // using mint = modint998244353;
