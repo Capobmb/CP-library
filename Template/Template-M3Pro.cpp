@@ -94,11 +94,18 @@ constexpr int dx[]={1, 0, -1, 0};
 // constexpr int dx[]={1, 1, 0, -1, -1, -1, 0, 1};
 // # Debug Macro
 #ifdef LOCAL
-    #include "CP-library/debug_print.hpp"
-    #define debug(...) debug_impl(__LINE__, __VA_ARGS__)
-    #define debug_impl(...) debug_print::multi_print(#__VA_ARGS__, __VA_ARGS__)
+    // #include "CP-library/debug_print.hpp"
+    // #define debug(...) debug_impl(__LINE__, __VA_ARGS__)
+    // #define debug_impl(...) debug_print::multi_print(#__VA_ARGS__, __VA_ARGS__)
     #include "cpp-dump/cpp-dump.hpp"
     #define dump(...) cpp_dump(__VA_ARGS__)
+    #if __has_include(<atcoder/modint>)
+        #include <atcoder/modint>
+        namespace cpp_dump::_detail {
+        template <int m> inline std::string export_var( const atcoder::static_modint<m> &mint, const std::string &indent, std::size_t last_line_length, std::size_t current_depth, bool fail_on_newline, const export_command &command ) { return export_var(mint.val(), indent, last_line_length, current_depth, fail_on_newline, command); }
+        template <int m> inline std::string export_var( const atcoder::dynamic_modint<m> &mint, const std::string &indent, std::size_t last_line_length, std::size_t current_depth, bool fail_on_newline, const export_command &command) { return export_var(mint.val(), indent, last_line_length, current_depth, fail_on_newline, command); }
+        }  // namespace cpp_dump::_detail
+    #endif // __has_include(<atcoder/modint>)
     namespace cp = cpp_dump;
     CPP_DUMP_SET_OPTION_GLOBAL(max_line_width, 100);
     CPP_DUMP_SET_OPTION_GLOBAL(log_label_func, cp::log_label::line());
