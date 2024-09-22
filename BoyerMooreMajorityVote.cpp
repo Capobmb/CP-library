@@ -1,3 +1,5 @@
+#include <tuple>
+#include <vector>
 // returns {whether majority exists, majority element, size of majority}
 template<class T>
 std::tuple<bool, T, int> boyer_moore_majority_vote(const std::vector<T>& v) {

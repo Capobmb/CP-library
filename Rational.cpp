@@ -1,3 +1,6 @@
+#include <cassert>
+#include <cmath>
+
 // IF YOU USE INT128_t, DO BUNDLE int128_t operator overload here.
 // INF, NaN, -0 を認めない; 0 は 0/1 とみなす
 // note : 自動的に INF=1/0,-INF=-1/0,NaN=0/0 となるので四則演算だけに限れば大丈夫だが比較が壊れる(INF==NaNなど)

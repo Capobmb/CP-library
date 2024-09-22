@@ -1,3 +1,6 @@
+#include <vector>
+#include <utility>
+
 std::vector<std::pair<long long, long long>> prime_factorize(long long N) {
     std::vector<std::pair<long long, long long>> res;
     for (long long a = 2; a * a <= N; ++a) {
