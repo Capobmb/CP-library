@@ -123,6 +123,7 @@ struct all_direction_tree_dp {
 
 
 //  Example code : ABC222-F Expensive Expense
+/*
 using namespace std;
 int main() {
     int n; cin>>n; 
@@ -144,3 +145,4 @@ int main() {
     auto res = dp.run();
     for(int i=0; i<n; i++) cout << res[i] << '\n';
 }
+*/
