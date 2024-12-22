@@ -22,7 +22,17 @@ struct Mo {
 
         using T = decltype(calc());
         std::vector<T> res(q);
-        width = std::max<int>(1, n / std::sqrt(q));
+        // If all points (l, r) are interval i.e. l <= r
+        //   the total moves are at most N^2 / 2W + QW + O(N)
+        //   From AM-GM inequality W ~ sqrt(N^2 / 2Q) = N / sqrt(2Q) minimizes the total cost
+        // Otherwise, the total moves are at most N^2 / W + QW + O(N)
+        //   In this case, W ~ sqrt(N^2 / Q) = N / sqrt(Q)
+        // Here we assume the first case is dominant.
+        // Set the width to ensure it is at least 1.
+        // Note: If the given points can be assumed to be randomly distributed
+        //   a more efficient time complexity can be achieved
+        //   ref: https://nyaannyaan.github.io/library/misc/mo.hpp.html
+        width = std::max<int>(1, static_cast<double>(n) / std::sqrt(2.0 * q));
         std::vector<int> que(q);
         std::iota(que.begin(), que.end(), 0);
         std::sort(que.begin(), que.end(), [&](int i, int j) {
